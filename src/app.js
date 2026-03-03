@@ -11,6 +11,7 @@ import studentRoutes from "./routes/student.routes.js";
 import publicRoutes from "./routes/public.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 import { fail } from "./utils/response.js";
+import { corsConfig, corsErrorHandler } from "./config/corsConfig.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,10 +20,8 @@ export function createApp() {
   const app = express();
 
   app.use(helmet());
-  app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  }));
+  app.use(cors(corsConfig));
+  app.use(corsErrorHandler);
   app.use(express.json({ limit: "2mb" }));
   app.use(morgan("dev"));
 
