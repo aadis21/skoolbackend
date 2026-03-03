@@ -87,3 +87,10 @@ export async function me(req, res) {
   if (!u) return fail(res, 404, "User not found");
   return ok(res, { user: sanitizeUser(u) }, "Me");
 }
+
+export async function logout(req, res) {
+  // Token is invalidated on the client side by removing it from localStorage
+  // Backend doesn't need to maintain a token blacklist for this simple implementation
+  // For enhanced security, implement token blacklisting in production
+  return ok(res, {}, "Logged out successfully");
+}
